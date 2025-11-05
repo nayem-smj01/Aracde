@@ -1,0 +1,75 @@
+                                                                                                                                        plugins {
+                                                                                                                                            id 'java'
+                                                                                                                                          //  id 'application'
+                                                                                                                                            id 'org.springframework.boot' version '3.2.0'
+                                                                                                                                            id 'io.spring.dependency-management' version '1.1.4'
+                                                                                                                                        }
+
+                                                                                                                                        group = 'com.example'
+                                                                                                                                        version = '1.0-SNAPSHOT'
+
+                                                                                                                                        java {
+                                                                                                                                            sourceCompatibility = JavaVersion.VERSION_21
+                                                                                                                                            targetCompatibility = JavaVersion.VERSION_21
+                                                                                                                                        }
+
+                                                                                                                                        repositories {
+                                                                                                                                            mavenCentral()
+                                                                                                                                        }
+
+                                                                                                                                        ext {
+                                                                                                                                            arcadedbVersion = '25.9.1'
+                                                                                                                                        }
+
+                                                                                                                                        dependencies {
+                                                                                                                                            // Spring Boot Starters
+                                                                                                                                            implementation 'org.springframework.boot:spring-boot-starter-web'
+                                                                                                                                            implementation 'org.springframework.boot:spring-boot-starter-validation'
+                                                                                                                                            implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+                                                                                                                                            // ArcadeDB
+                                                                                                                                            implementation "com.arcadedb:arcadedb-engine:${arcadedbVersion}"
+                                                                                                                                            implementation "com.arcadedb:arcadedb-network:${arcadedbVersion}"
+                                                                                                                                            // Swagger/OpenAPI Documentation
+                                                                                                                                            implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+                                                                                                                                            // Lombok (optional, for reducing boilerplate)
+                                                                                                                                            compileOnly 'org.projectlombok:lombok'
+                                                                                                                                            annotationProcessor 'org.projectlombok:lombok'
+
+                                                                                                                                            // ArcadeDB - need to exclude gson to avoid version conflicts
+                                                                                                                                            implementation("com.arcadedb:arcadedb-engine:${arcadedbVersion}") {
+                                                                                                                                                exclude group: 'com.google.code.gson', module: 'gson'
+                                                                                                                                            }
+
+                                                                                                                                            // Add Gson explicitly with compatible version
+                                                                                                                                            implementation 'com.google.code.gson:gson:2.11.0'
+
+                                                                                                                                            // Testing
+                                                                                                                                            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+                                                                                                                                        }
+                                                                                                                                        /*
+                                                                                                                                        application {
+                                                                                                                                            mainClass = 'com.example.FoodDataImporter'
+                                                                                                                                        } */
+
+                                                                                                                                        // Apply duplicate strategy to all relevant task types
+                                                                                                                                        tasks.withType(Jar).configureEach {
+                                                                                                                                            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                                                                                                                                        }
+
+                                                                                                                                        tasks.withType(Tar).configureEach {
+                                                                                                                                            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                                                                                                                                        }
+
+                                                                                                                                        tasks.withType(Zip).configureEach {
+                                                                                                                                            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                                                                                                                                        }
+
+                                                                                                                                        tasks.withType(JavaCompile).configureEach {
+                                                                                                                                            options.encoding = 'UTF-8'
+                                                                                                                                        }
+
+                                                                                                                                        test {
+                                                                                                                                            useJUnitPlatform()
+                                                                                                                                        }
