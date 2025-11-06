@@ -8,9 +8,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DatabaseResponse {
     
-    private List<DatabaseDto> databases;
-    private int count;
-    private LocalDateTime timestamp;
+    private final List<DatabaseDto> databases;
+    private final int count;
+    private final LocalDateTime timestamp;
     
     public DatabaseResponse(List<DatabaseDto> databases) {
         this.databases = databases;

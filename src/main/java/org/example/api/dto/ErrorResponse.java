@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 public class ErrorResponse {
     
-    private String message;
-    private String error;
-    private int status;
-    private LocalDateTime timestamp;
+    private final String message;
+    private final String error;
+    private final int status;
+    private final LocalDateTime timestamp;
     
     public ErrorResponse(String message, String error, int status) {
         this.message = message;
